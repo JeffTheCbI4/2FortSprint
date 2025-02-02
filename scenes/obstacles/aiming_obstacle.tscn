@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://b8esc713idmvi"]
+
+[ext_resource type="Script" path="res://scenes/obstacles/AimingObstacle.gd" id="1_dt2py"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xha14"]
+size = Vector2(60, 20)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_kngac"]
+size = Vector2(60, 20)
+
+[node name="AimingObstacle" type="Area2D"]
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("1_dt2py")
+velocity = 700.0
+acceleration = 10.0
+angular_speed = 0.01
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_xha14")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("PlaceholderTexture2D_kngac")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+rect = Rect2(-30, -10, 60, 20)
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_screen_exited"]

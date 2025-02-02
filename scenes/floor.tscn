@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://df68vq3gn825x"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_qleal"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_mih4s"]
+size = Vector2(500, 10)
+
+[node name="Floor" type="StaticBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("WorldBoundaryShape2D_qleal")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("PlaceholderTexture2D_mih4s")

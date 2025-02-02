@@ -1,0 +1,38 @@
+[gd_scene load_steps=7 format=3 uid="uid://dp7hykj2x0s6y"]
+
+[ext_resource type="Script" path="res://scenes/playground.gd" id="1_2nymt"]
+[ext_resource type="PackedScene" uid="uid://bemh7hd2chnlj" path="res://scenes/Player.tscn" id="1_qv6v6"]
+[ext_resource type="PackedScene" uid="uid://t3hqd341ct5" path="res://scenes/obstacle_generator.tscn" id="2_08xgw"]
+[ext_resource type="PackedScene" uid="uid://b8esc713idmvi" path="res://scenes/obstacles/aiming_obstacle.tscn" id="2_k4d5x"]
+[ext_resource type="PackedScene" uid="uid://df68vq3gn825x" path="res://scenes/floor.tscn" id="3_22sj6"]
+[ext_resource type="PackedScene" uid="uid://b14pld32g3be" path="res://scenes/game_interface.tscn" id="3_nljyv"]
+
+[node name="Playground" type="Node"]
+script = ExtResource("1_2nymt")
+is_incrementing_score = true
+
+[node name="Player" parent="." instance=ExtResource("1_qv6v6")]
+position = Vector2(168, 495)
+gravity_force = 65.0
+max_velocity = 700.0
+min_velocity = -600.0
+current_state = 1
+
+[node name="AimingObstacle" parent="." instance=ExtResource("2_k4d5x")]
+process_mode = 4
+position = Vector2(1339, 298)
+angular_speed = 0.02
+
+[node name="Floor" parent="." instance=ExtResource("3_22sj6")]
+position = Vector2(166, 604)
+
+[node name="ObstacleGenerator" parent="." instance=ExtResource("2_08xgw")]
+position = Vector2(1381, 71)
+
+[node name="GameInterface" parent="." instance=ExtResource("3_nljyv")]
+
+[node name="ceiling" parent="." instance=ExtResource("3_22sj6")]
+position = Vector2(172, 4)
+rotation = 3.14159
+
+[connection signal="player_died" from="Player" to="." method="_on_player_player_died"]

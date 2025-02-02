@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://dmlq4ggfgqm8t"]
+
+[ext_resource type="Script" path="res://scenes/obstacles/moving_obstacle.gd" id="1_xyiqs"]
+
+[sub_resource type="Curve2D" id="Curve2D_ue44o"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 300, 0, 0, 0, 0, 0, 0)
+}
+point_count = 3
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_su1gk"]
+size = Vector2(45, 45)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_e3g17"]
+radius = 30.0
+
+[node name="MovingObstacle" type="Path2D"]
+position = Vector2(0, -150)
+curve = SubResource("Curve2D_ue44o")
+script = ExtResource("1_xyiqs")
+progress_speed = 400.0
+moving_speed = 400.0
+
+[node name="PathFollow2D" type="PathFollow2D" parent="."]
+rotation = 1.5708
+
+[node name="Area2D" type="Area2D" parent="PathFollow2D"]
+collision_layer = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="PathFollow2D/Area2D"]
+texture = SubResource("PlaceholderTexture2D_su1gk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PathFollow2D/Area2D"]
+shape = SubResource("CircleShape2D_e3g17")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="PathFollow2D/Area2D"]
+
+[connection signal="screen_exited" from="PathFollow2D/Area2D/VisibleOnScreenNotifier2D" to="." method="on_screen_exited"]
