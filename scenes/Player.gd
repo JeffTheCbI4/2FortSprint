@@ -37,9 +37,9 @@ func _physics_process(delta):
 	pass
 
 func generate_bullets():
-	var first = generate_bullet(Vector2 (-25, 60), -260)
-	var second = generate_bullet(Vector2 (0, 60), -270)
-	var third = generate_bullet(Vector2 (25, 60), -280)
+	var first = generate_bullet(Vector2 (-25, 60), -260 + randf_range(-20, 20))
+	var second = generate_bullet(Vector2 (0, 60), -270 + randf_range(-20, 20))
+	var third = generate_bullet(Vector2 (25, 60), -280 + randf_range(-20, 20))
 
 func generate_bullet(relational_position, directon_degree):
 	var bullet = bullet_scene.instantiate()
@@ -67,7 +67,7 @@ func set_falling_velocity(new_velocity):
 		falling_velocity = new_velocity
 
 
-func _die():
+func die():
 	current_state = State.DEAD
 	get_node("Timer").stop()
 	_set_animation("dead")
@@ -79,7 +79,7 @@ func _set_animation(animation_name):
 	pass
 
 func _on_area_2d_area_entered(area):
-	_die()
+	die()
 	pass # Replace with function body.
 
 

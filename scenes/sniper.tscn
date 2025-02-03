@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://byqkcy3lapy3u"]
+
+[ext_resource type="Script" path="res://scenes/Sniper.gd" id="1_cb0ux"]
+
+[node name="Sniper" type="Node2D"]
+rotation = 1.5708
+script = ExtResource("1_cb0ux")
+angular_speed = 0.01
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0, 1600, 0)
+width = 2.0
+default_color = Color(1, 0, 1, 1)
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(1600, 0)
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="ShootingTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="ShootingTimer" to="." method="_on_shooting_timer_timeout"]
