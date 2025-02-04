@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dp7hykj2x0s6y"]
+[gd_scene load_steps=7 format=3 uid="uid://dp7hykj2x0s6y"]
 
 [ext_resource type="Script" path="res://scenes/playground.gd" id="1_2nymt"]
 [ext_resource type="PackedScene" uid="uid://bemh7hd2chnlj" path="res://scenes/Player.tscn" id="1_qv6v6"]
@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://b8esc713idmvi" path="res://scenes/obstacles/aiming_obstacle.tscn" id="2_k4d5x"]
 [ext_resource type="PackedScene" uid="uid://df68vq3gn825x" path="res://scenes/floor.tscn" id="3_22sj6"]
 [ext_resource type="PackedScene" uid="uid://b14pld32g3be" path="res://scenes/game_interface.tscn" id="3_nljyv"]
-[ext_resource type="PackedScene" uid="uid://byqkcy3lapy3u" path="res://scenes/sniper.tscn" id="7_yb3rs"]
 
 [node name="Playground" type="Node"]
 script = ExtResource("1_2nymt")
@@ -35,8 +34,5 @@ position = Vector2(1381, 71)
 [node name="ceiling" parent="." instance=ExtResource("3_22sj6")]
 position = Vector2(172, 4)
 rotation = 3.14159
-
-[node name="Sniper" parent="." instance=ExtResource("7_yb3rs")]
-position = Vector2(777, 191)
 
 [connection signal="player_died" from="Player" to="." method="_on_player_player_died"]

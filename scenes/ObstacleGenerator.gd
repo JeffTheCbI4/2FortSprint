@@ -3,6 +3,8 @@ extends Node2D
 @export var progress_speed: float
 @export var possible_obstacles: Array
 
+var sniperAllowed = true;
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -30,5 +32,17 @@ func _generate_obstacle():
 	obstacle.position = _get_current_path_position()
 
 func _get_random_obstacle():
-	var random_index = randi_range(0, possible_obstacles.size() - 1)
+	var random_index = 0
+	if (sniperAllowed):
+		random_index = randi_range(0, possible_obstacles.size() - 1)
+	else:
+		random_index = randi_range(0, possible_obstacles.size() - 2)
+	if (random_index == 3 && sniperAllowed):
+		sniperAllowed = false
+		get_node("SniperCooldown").start()
 	return possible_obstacles[random_index]
+
+
+func _on_sniper_cooldown_timeout():
+	sniperAllowed = true
+	pass # Replace with function body.

@@ -1,6 +1,7 @@
 extends Node2D
 
 @export var angular_speed: float
+@export var speed_slowing: float
 var target
 var state: SniperState = SniperState.AIMING
 
@@ -18,6 +19,8 @@ func _process(delta):
 	pass
 
 func _physics_process(delta):
+	if (angular_speed > 0.005):
+		angular_speed -= speed_slowing
 	if (!target):
 		target = Global.player
 	if (state == SniperState.AIMING):
@@ -48,6 +51,6 @@ func _on_shooting_timer_timeout():
 	print(ray.get_collider())
 	print(ray.get_collider())
 	if (ray.is_colliding() && ray.get_collider() && ray.get_collider().owner is Player):
-		target.die()
+		target.lose_life()
 	queue_free()
 	pass # Replace with function body.

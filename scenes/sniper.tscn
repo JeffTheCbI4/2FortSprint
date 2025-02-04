@@ -5,7 +5,8 @@
 [node name="Sniper" type="Node2D"]
 rotation = 1.5708
 script = ExtResource("1_cb0ux")
-angular_speed = 0.01
+angular_speed = 0.05
+speed_slowing = 0.001
 
 [node name="Line2D" type="Line2D" parent="."]
 points = PackedVector2Array(0, 0, 1600, 0)

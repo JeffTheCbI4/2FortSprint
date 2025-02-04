@@ -1,6 +1,8 @@
 extends CharacterBody2D
 class_name Player
 
+@export var max_life: int
+@export var life: int
 @export var jump_force: float
 @export var topMaxPoint: float
 @export var bottomMaxPoint: float
@@ -9,11 +11,13 @@ class_name Player
 @export var max_velocity: float
 @export var min_velocity: float
 @export var current_state: State
+@export var health_state: HealthState
 signal player_died
 
 var bullet_scene = preload("res://scenes/bullet.tscn")
 
 enum State { ON_FLOOR, FLYING, DEAD }
+enum HealthState { INVINCIBLE, VULNERABLE }
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -33,7 +37,7 @@ func _physics_process(delta):
 		var collision = move_and_collide(Vector2(0, falling_velocity) * delta)
 		if (collision && current_state != State.DEAD && collision.get_angle() == 0):
 			current_state = State.ON_FLOOR
-			get_node("Timer").stop()
+			get_node("BulletsCooldown").stop()
 	pass
 
 func generate_bullets():
@@ -53,7 +57,7 @@ func _process_player_input(delta):
 		set_falling_velocity(falling_velocity - jump_force)
 		if (current_state == State.ON_FLOOR):
 			current_state = State.FLYING
-			get_node("Timer").start()
+			get_node("BulletsCooldown").start()
 	#if (collidedBody):
 		#falling_velocity = 0
 	pass
@@ -66,10 +70,20 @@ func set_falling_velocity(new_velocity):
 	else:
 		falling_velocity = new_velocity
 
+func lose_life():
+	if (current_state != State.DEAD && health_state != HealthState.INVINCIBLE):
+		life -= 1
+		if (life <= 0):
+			die()
+		if (current_state != State.DEAD):
+			get_node("CollisionCooldown").start()
+			health_state = HealthState.INVINCIBLE
+			get_node("InvincibleFlickerTimer").start()
+		EventBus.emit_signal("player_lost_life", life)
 
 func die():
 	current_state = State.DEAD
-	get_node("Timer").stop()
+	get_node("BulletsCooldown").stop()
 	_set_animation("dead")
 	emit_signal("player_died")
 	pass
@@ -79,11 +93,22 @@ func _set_animation(animation_name):
 	pass
 
 func _on_area_2d_area_entered(area):
-	die()
+	lose_life()
+	pass # Replace with function body.
+
+func _on_bullets_cooldown_timeout():
+	if (current_state == State.FLYING):
+		generate_bullets()
 	pass # Replace with function body.
 
 
-func _on_timer_timeout():
-	if (current_state == State.FLYING):
-		generate_bullets()
+func _on_collision_cooldown_timeout():
+	health_state = HealthState.VULNERABLE
+	get_node("InvincibleFlickerTimer").stop()
+	visible = true
+	pass # Replace with function body.
+
+
+func _on_invincible_flicker_timer_timeout():
+	visible = !visible
 	pass # Replace with function body.
