@@ -19,7 +19,7 @@ position = Vector2(0, -150)
 curve = SubResource("Curve2D_ue44o")
 script = ExtResource("1_xyiqs")
 progress_speed = 400.0
-moving_speed = 400.0
+moving_speed = 500.0
 
 [node name="PathFollow2D" type="PathFollow2D" parent="."]
 rotation = 1.5708

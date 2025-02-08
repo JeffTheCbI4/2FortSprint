@@ -1,0 +1,76 @@
+[gd_scene load_steps=17 format=3 uid="uid://ck6cotaesxa8x"]
+
+[ext_resource type="Script" path="res://audio_manager.gd" id="1_5dyp1"]
+[ext_resource type="AudioStream" uid="uid://ct7xrv1taii2v" path="res://audio/sniper/sniper_ahh_piss.mp3" id="1_75xlu"]
+[ext_resource type="AudioStream" uid="uid://dwiarv0j21wdc" path="res://audio/sniper/sniper_autodejectedtie03.mp3" id="2_hyaur"]
+[ext_resource type="AudioStream" uid="uid://cdd3kgganwiw7" path="res://audio/sniper/sniper_spit.mp3" id="4_3y4sf"]
+[ext_resource type="AudioStream" uid="uid://myi2wskmfpxj" path="res://audio/sniper/sniper_laughevil03.mp3" id="5_0gvn0"]
+[ext_resource type="AudioStream" uid="uid://cxkgnfi5o41yv" path="res://audio/sniper/sniper_laughlong01.mp3" id="6_jmam2"]
+[ext_resource type="AudioStream" uid="uid://xov17fe8m82g" path="res://audio/sniper/sniper_laughlong02.mp3" id="7_iig1d"]
+[ext_resource type="AudioStream" uid="uid://c7w27hmekg7qf" path="res://audio/sniper/sniper_standing_still.mp3" id="8_5oaq1"]
+[ext_resource type="AudioStream" uid="uid://cfo2c1tw8jvf3" path="res://audio/soldier/soldier_if_you_know.wav" id="9_3vock"]
+[ext_resource type="AudioStream" uid="uid://besvgcy4kduq6" path="res://audio/soldier/soldier_screaming_eagles.mp3" id="10_631ty"]
+[ext_resource type="AudioStream" uid="uid://bkqfj1bb5iugo" path="res://audio/soldier/soldier_battlecry01.mp3" id="11_knvxs"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_7x313"]
+streams_count = 2
+stream_0/stream = ExtResource("1_75xlu")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("2_hyaur")
+stream_1/weight = 1.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_5vcuy"]
+streams_count = 5
+stream_0/stream = ExtResource("5_0gvn0")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("6_jmam2")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("7_iig1d")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("4_3y4sf")
+stream_3/weight = 1.0
+stream_4/stream = ExtResource("8_5oaq1")
+stream_4/weight = 1.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_r4btf"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_s6dxu"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_o3r2h"]
+streams_count = 3
+stream_0/stream = ExtResource("9_3vock")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("10_631ty")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("11_knvxs")
+stream_2/weight = 1.0
+
+[node name="AudioManager" type="Node2D"]
+script = ExtResource("1_5dyp1")
+characters_sounds = {
+"SNIPER": {
+"FAIL": SubResource("AudioStreamRandomizer_7x313"),
+"WIN": SubResource("AudioStreamRandomizer_5vcuy")
+},
+"SOLDIER": {
+"CRY": SubResource("AudioStreamRandomizer_o3r2h"),
+"FAIL": SubResource("AudioStreamRandomizer_r4btf"),
+"WIN": SubResource("AudioStreamRandomizer_s6dxu")
+}
+}
+
+[node name="Player1" type="AudioStreamPlayer2D" parent="."]
+
+[node name="Player2" type="AudioStreamPlayer2D" parent="."]
+
+[node name="Player3" type="AudioStreamPlayer2D" parent="."]
+
+[node name="Player4" type="AudioStreamPlayer2D" parent="."]
+
+[node name="Player5" type="AudioStreamPlayer2D" parent="."]
+
+[node name="CharacterAudioCooldown" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[connection signal="timeout" from="CharacterAudioCooldown" to="." method="_on_character_audio_cooldown_timeout"]

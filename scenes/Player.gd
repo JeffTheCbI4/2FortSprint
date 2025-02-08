@@ -22,6 +22,7 @@ enum HealthState { INVINCIBLE, VULNERABLE }
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	Global.player = self
+	get_node("AnimatedSprite2D").play()
 	pass # Replace with function body.
 
 

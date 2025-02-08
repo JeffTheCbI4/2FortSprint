@@ -1,12 +1,47 @@
-[gd_scene load_steps=4 format=3 uid="uid://b8esc713idmvi"]
+[gd_scene load_steps=10 format=3 uid="uid://b8esc713idmvi"]
 
 [ext_resource type="Script" path="res://scenes/obstacles/AimingObstacle.gd" id="1_dt2py"]
+[ext_resource type="Texture2D" uid="uid://bhs5usfomqdix" path="res://art/rocket.png" id="2_736bg"]
+[ext_resource type="AudioStream" uid="uid://b6vlyqydxn3gf" path="res://audio/soldier/rocket_blackbox_shoot.wav" id="3_bwoyn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xha14"]
-size = Vector2(60, 20)
+size = Vector2(120, 30)
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_kngac"]
-size = Vector2(60, 20)
+[sub_resource type="AtlasTexture" id="AtlasTexture_1h63w"]
+atlas = ExtResource("2_736bg")
+region = Rect2(0, 0, 120, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v6bk8"]
+atlas = ExtResource("2_736bg")
+region = Rect2(120, 0, 120, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i2n23"]
+atlas = ExtResource("2_736bg")
+region = Rect2(240, 0, 120, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cgfvp"]
+atlas = ExtResource("2_736bg")
+region = Rect2(360, 0, 120, 40)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2evn3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1h63w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v6bk8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i2n23")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cgfvp")
+}],
+"loop": true,
+"name": &"default",
+"speed": 30.0
+}]
 
 [node name="AimingObstacle" type="Area2D"]
 collision_layer = 2
@@ -19,11 +54,16 @@ angular_speed = 0.01
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_xha14")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = SubResource("PlaceholderTexture2D_kngac")
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_2evn3")
+frame = 2
+frame_progress = 0.460313
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-rect = Rect2(-30, -10, 60, 20)
+rect = Rect2(-60, -15, 120, 30)
+
+[node name="FireSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_bwoyn")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

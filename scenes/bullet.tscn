@@ -9,7 +9,7 @@ size = Vector2(10, 10)
 [node name="Bullet" type="Area2D"]
 scale = Vector2(3, 3)
 collision_layer = 4
-collision_mask = 3
+collision_mask = 2
 script = ExtResource("1_d7jpj")
 speed = 500.0
 

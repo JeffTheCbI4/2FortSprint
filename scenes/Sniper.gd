@@ -10,7 +10,7 @@ enum SniperState { AIMING, READY_TO_FIRE }
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var target = Global.player
-	print(target)
+	get_node("ReadySound").play()
 	pass # Replace with function body.
 
 
@@ -47,10 +47,12 @@ func _process_ray_cast(delta):
 
 func _on_shooting_timer_timeout():
 	var ray:RayCast2D = get_node("RayCast2D")
-	print(ray.is_colliding())
-	print(ray.get_collider())
-	print(ray.get_collider())
+	EventBus.emit_signal("play_stream", preload("res://audio/sniper/sniper_shoot.wav"))
 	if (ray.is_colliding() && ray.get_collider() && ray.get_collider().owner is Player):
 		target.lose_life()
+		if (target.current_state == Player.State.DEAD):
+			EventBus.emit_signal("play_character_sound", AudioManager.Character.SNIPER, AudioManager.CharacterSoundType.WIN)
+	else:
+		EventBus.emit_signal("play_character_sound", AudioManager.Character.SNIPER, AudioManager.CharacterSoundType.FAIL)
 	queue_free()
 	pass # Replace with function body.

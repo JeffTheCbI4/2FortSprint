@@ -13,9 +13,6 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	_progress()
-	var randomNum = randi_range(0,100)
-	if (randomNum > 99):
-		_generate_obstacle()
 	pass
 
 func _get_current_path_position():
@@ -45,4 +42,9 @@ func _get_random_obstacle():
 
 func _on_sniper_cooldown_timeout():
 	sniperAllowed = true
+	pass # Replace with function body.
+
+
+func _on_generation_timer_timeout():
+	_generate_obstacle()
 	pass # Replace with function body.

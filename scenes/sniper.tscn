@@ -1,6 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://byqkcy3lapy3u"]
+[gd_scene load_steps=5 format=3 uid="uid://byqkcy3lapy3u"]
 
 [ext_resource type="Script" path="res://scenes/Sniper.gd" id="1_cb0ux"]
+[ext_resource type="AudioStream" uid="uid://hiw3y1n3o76g" path="res://audio/sniper/sniper_steady.mp3" id="2_x245n"]
+[ext_resource type="AudioStream" uid="uid://jcr4msui6i8n" path="res://audio/sniper/sniper_steady2.mp3" id="3_naqev"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_quk04"]
+streams_count = 2
+stream_0/stream = ExtResource("2_x245n")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("3_naqev")
+stream_1/weight = 1.0
 
 [node name="Sniper" type="Node2D"]
 rotation = 1.5708
@@ -20,5 +29,8 @@ collide_with_bodies = false
 
 [node name="ShootingTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="ReadySound" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_quk04")
 
 [connection signal="timeout" from="ShootingTimer" to="." method="_on_shooting_timer_timeout"]

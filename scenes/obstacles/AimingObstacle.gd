@@ -10,6 +10,7 @@ var target
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	target = Global.player
+	EventBus.emit_signal("play_stream", preload("res://audio/soldier/rocket_blackbox_shoot.wav"))
 	pass # Replace with function body.
 
 
