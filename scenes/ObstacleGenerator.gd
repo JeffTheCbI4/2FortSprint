@@ -3,24 +3,26 @@ extends Node2D
 @export var progress_speed: float
 @export var possible_obstacles: Array
 
-var sniperAllowed = true;
+@export var sniperAllowed = true;
+@export var obsctacle_cooldown: float;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	get_node("GenerationTimer").wait_time = obsctacle_cooldown
 	pass # Replace with function body.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	_progress()
+	_progress(delta)
 	pass
 
 func _get_current_path_position():
 	return get_node("Path2D/PathFollow2D").position + get_node("Path2D").position
 	
-func _progress():
+func _progress(delta):
 	var pathFollow = get_node("Path2D/PathFollow2D")
-	var newProgress = pathFollow.progress + progress_speed
+	var newProgress = pathFollow.progress + progress_speed * delta
 	pathFollow.set_progress(newProgress)
 	
 func _generate_obstacle():

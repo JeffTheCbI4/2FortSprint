@@ -11,6 +11,7 @@ var target
 func _ready():
 	target = Global.player
 	EventBus.emit_signal("play_stream", preload("res://audio/soldier/rocket_blackbox_shoot.wav"))
+	EventBus.emit_signal("play_character_sound", AudioManager.Character.SOLDIER, AudioManager.CharacterSoundType.CRY)
 	pass # Replace with function body.
 
 

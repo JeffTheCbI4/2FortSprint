@@ -1,8 +1,9 @@
-[gd_scene load_steps=17 format=3 uid="uid://bemh7hd2chnlj"]
+[gd_scene load_steps=19 format=3 uid="uid://bemh7hd2chnlj"]
 
 [ext_resource type="Script" path="res://scenes/Player.gd" id="1_x4ny1"]
 [ext_resource type="Texture2D" uid="uid://r0m2pv5s1grs" path="res://art/PlayerDead.png" id="3_4pfsv"]
 [ext_resource type="Texture2D" uid="uid://dvicirvcemeu" path="res://art/scout.png" id="3_cd737"]
+[ext_resource type="Script" path="res://scenes/HealthRequestSprite.gd" id="4_2nafg"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yabf2"]
 atlas = ExtResource("3_cd737")
@@ -96,6 +97,9 @@ size = Vector2(124, 196)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mypb7"]
 size = Vector2(76.0259, 212.884)
 
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_2f6o4"]
+size = Vector2(70, 70)
+
 [node name="Player" type="CharacterBody2D"]
 scale = Vector2(0.5, 0.5)
 script = ExtResource("1_x4ny1")
@@ -136,7 +140,20 @@ one_shot = true
 [node name="InvincibleFlickerTimer" type="Timer" parent="."]
 wait_time = 0.2
 
+[node name="HealthRequestSprite" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(138, -68)
+texture = SubResource("PlaceholderTexture2D_2f6o4")
+script = ExtResource("4_2nafg")
+
+[node name="FadingTimer" type="Timer" parent="HealthRequestSprite"]
+wait_time = 0.1
+autostart = true
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
 [connection signal="timeout" from="BulletsCooldown" to="." method="_on_bullets_cooldown_timeout"]
 [connection signal="timeout" from="CollisionCooldown" to="." method="_on_collision_cooldown_timeout"]
 [connection signal="timeout" from="InvincibleFlickerTimer" to="." method="_on_invincible_flicker_timer_timeout"]
+[connection signal="timeout" from="HealthRequestSprite/FadingTimer" to="HealthRequestSprite" method="_on_fading_timer_timeout"]

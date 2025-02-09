@@ -20,7 +20,7 @@ speed_slowing = 0.001
 [node name="Line2D" type="Line2D" parent="."]
 points = PackedVector2Array(0, 0, 1600, 0)
 width = 2.0
-default_color = Color(1, 0, 1, 1)
+default_color = Color(0.0666667, 0.286275, 1, 1)
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 target_position = Vector2(1600, 0)

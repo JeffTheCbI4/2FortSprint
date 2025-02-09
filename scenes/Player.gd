@@ -15,6 +15,11 @@ class_name Player
 signal player_died
 
 var bullet_scene = preload("res://scenes/bullet.tscn")
+var medic_calls = [
+	preload("res://audio/scout/medic01.mp3"),
+	preload("res://audio/scout/medic02.mp3"),
+	preload("res://audio/scout/medic03.mp3")
+]
 
 enum State { ON_FLOOR, FLYING, DEAD }
 enum HealthState { INVINCIBLE, VULNERABLE }
@@ -28,6 +33,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	
 	pass
 	
 func _physics_process(delta):
@@ -53,14 +59,29 @@ func generate_bullet(relational_position, directon_degree):
 	add_sibling(bullet)
 
 func _process_player_input(delta):
-	var spacePresses = Input.is_key_pressed(KEY_SPACE)
-	if (spacePresses):
+	var spacePressed = Input.is_key_pressed(KEY_SPACE)
+	if (spacePressed):
 		set_falling_velocity(falling_velocity - jump_force)
 		if (current_state == State.ON_FLOOR):
 			current_state = State.FLYING
+		if get_node("BulletsCooldown").is_stopped():
 			get_node("BulletsCooldown").start()
+	else:
+		get_node("BulletsCooldown").stop()
+
 	#if (collidedBody):
 		#falling_velocity = 0
+	pass
+
+func _input(event):
+	if (event.is_action_pressed("ui_medic_call")):
+		var stream = medic_calls.pick_random()
+		var player = get_node("AudioStreamPlayer2D")
+		player.stream = stream
+		player.play()
+		var modulate = get_node("HealthRequestSprite").get_modulate()
+		modulate.a = 1.0
+		get_node("HealthRequestSprite").set_modulate(modulate)
 	pass
 	
 func set_falling_velocity(new_velocity):

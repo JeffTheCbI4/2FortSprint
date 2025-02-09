@@ -40,7 +40,7 @@ func _process_ray_cast(delta):
 	var ray:RayCast2D = get_node("RayCast2D")
 	if (ray.is_colliding() && ray.get_collider()):
 		state = SniperState.READY_TO_FIRE
-		get_node("Line2D").default_color = Color.DARK_ORANGE
+		get_node("Line2D").default_color = Color.SKY_BLUE
 		get_node("ShootingTimer").start()
 		pass
 
