@@ -13,6 +13,7 @@ class_name Player
 @export var current_state: State
 @export var health_state: HealthState
 signal player_died
+signal medic_used
 
 var bullet_scene = preload("res://scenes/bullet.tscn")
 var medic_calls = [
@@ -75,15 +76,21 @@ func _process_player_input(delta):
 
 func _input(event):
 	if (event.is_action_pressed("ui_medic_call")):
-		var stream = medic_calls.pick_random()
-		var player = get_node("AudioStreamPlayer2D")
-		player.stream = stream
-		player.play()
-		var modulate = get_node("HealthRequestSprite").get_modulate()
-		modulate.a = 1.0
-		get_node("HealthRequestSprite").set_modulate(modulate)
+		_call_medic()
 	pass
 	
+func _call_medic():
+	var stream = medic_calls.pick_random()
+	var player = get_node("AudioStreamPlayer2D")
+	player.stream = stream
+	player.play()
+	var modulate = get_node("HealthRequestSprite").get_modulate()
+	modulate.a = 1.0
+	get_node("HealthRequestSprite").set_modulate(modulate)
+	EventBus.emit_signal("medic_used")
+	if ($MedicCooldown.is_stopped()):
+		$MedicCooldown.start()
+
 func set_falling_velocity(new_velocity):
 	if (new_velocity > max_velocity):
 		falling_velocity = max_velocity

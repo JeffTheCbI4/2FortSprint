@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://crp6s8ms4kgqh"]
+
+[ext_resource type="Script" path="res://scenes/MedicControl.gd" id="1_eiyl4"]
+[ext_resource type="Texture2D" uid="uid://gfdmkhpkgmr" path="res://art/medic_ui.png" id="2_gn040"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_qejj1"]
+font_size = 128
+
+[node name="MedicControl" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_eiyl4")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_gn040")
+hframes = 2
+
+[node name="Timer" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = -73.0
+offset_top = -97.0
+offset_right = 73.0
+offset_bottom = 78.0
+text = "30"
+label_settings = SubResource("LabelSettings_qejj1")

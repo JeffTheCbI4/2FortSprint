@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://b14pld32g3be"]
+[gd_scene load_steps=5 format=3 uid="uid://b14pld32g3be"]
 
 [ext_resource type="Script" path="res://scenes/game_interface.gd" id="1_ylf6b"]
 [ext_resource type="PackedScene" uid="uid://btlab8y00fff7" path="res://scenes/labeled_value.tscn" id="2_hf3ea"]
 [ext_resource type="PackedScene" uid="uid://bajtdwtyg17p0" path="res://health_control.tscn" id="3_xisba"]
+[ext_resource type="PackedScene" uid="uid://crp6s8ms4kgqh" path="res://scenes/medic_control.tscn" id="4_bkaq2"]
 
 [node name="GameInterface" type="Control"]
 layout_mode = 3
@@ -33,3 +34,11 @@ offset_left = 76.0
 offset_top = 648.0
 offset_right = 76.0
 offset_bottom = 648.0
+
+[node name="MedicControl" parent="." instance=ExtResource("4_bkaq2")]
+layout_mode = 1
+offset_left = 1204.0
+offset_top = 644.0
+offset_right = 1204.0
+offset_bottom = 644.0
+scale = Vector2(0.25, 0.25)

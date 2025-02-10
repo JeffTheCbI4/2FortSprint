@@ -62,3 +62,7 @@ func _set_highscore(score):
 	
 func _get_interface():
 	return get_node("GameInterface")
+
+func _on_music_finished():
+	$Music.play()
+	pass # Replace with function body.

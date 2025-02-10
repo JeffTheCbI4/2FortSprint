@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dp7hykj2x0s6y"]
+[gd_scene load_steps=12 format=3 uid="uid://dp7hykj2x0s6y"]
 
 [ext_resource type="Script" path="res://scenes/playground.gd" id="1_2nymt"]
 [ext_resource type="PackedScene" uid="uid://bemh7hd2chnlj" path="res://scenes/Player.tscn" id="1_qv6v6"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://dr0yfhmnym1ld" path="res://scenes/obstacles/basic_obstacle.tscn" id="5_5iktw"]
 [ext_resource type="PackedScene" uid="uid://dmlq4ggfgqm8t" path="res://scenes/obstacles/moving_obstacle.tscn" id="6_w6rub"]
 [ext_resource type="PackedScene" uid="uid://ck6cotaesxa8x" path="res://audio_manager.tscn" id="8_ihwcr"]
+[ext_resource type="AudioStream" uid="uid://ds4tqy837ymjp" path="res://audio/playing-with-danger remix.mp3" id="11_lim5o"]
 
 [node name="Playground" type="Node"]
 script = ExtResource("1_2nymt")
@@ -27,11 +28,10 @@ current_state = 1
 [node name="ObstacleGenerator" parent="." instance=ExtResource("2_08xgw")]
 position = Vector2(1381, 71)
 progress_speed = 700.0
-obsctacle_cooldown = 2.0
 
 [node name="ObstacleGenerator2" parent="." instance=ExtResource("2_08xgw")]
 position = Vector2(1381, 70)
-progress_speed = 1400.0
+progress_speed = 1200.0
 possible_obstacles = [ExtResource("5_5iktw"), ExtResource("6_w6rub"), ExtResource("2_k4d5x")]
 sniperAllowed = false
 obsctacle_cooldown = 1.5
@@ -48,4 +48,10 @@ rotation = 3.14159
 [node name="AudioManager" parent="." instance=ExtResource("8_ihwcr")]
 position = Vector2(1381, 355)
 
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_lim5o")
+volume_db = -10.307
+autoplay = true
+
 [connection signal="player_died" from="Player" to="." method="_on_player_player_died"]
+[connection signal="finished" from="Music" to="." method="_on_music_finished"]

@@ -8,9 +8,9 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	modulate.a -= 1 * delta
 	pass
 
 
 func _on_fading_timer_timeout():
-	modulate.a -= 0.1
 	pass # Replace with function body.

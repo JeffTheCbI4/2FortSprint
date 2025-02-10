@@ -1,7 +1,5 @@
-extends Node
+extends Timer
 
-static var player
-static var medic_call_left_time: float = 30.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -10,4 +8,11 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if (!is_stopped()):
+		Global.medic_call_left_time = time_left
 	pass
+
+
+func _on_timeout():
+	EventBus.emit_signal("medic_available")
+	pass # Replace with function body.
