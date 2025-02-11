@@ -3,7 +3,6 @@ extends Node2D
 @export var progress_speed: float
 @export var possible_obstacles: Array
 
-@export var sniperAllowed = true;
 @export var obsctacle_cooldown: float;
 
 # Called when the node enters the scene tree for the first time.
@@ -32,20 +31,8 @@ func _generate_obstacle():
 
 func _get_random_obstacle():
 	var random_index = 0
-	if (sniperAllowed):
-		random_index = randi_range(0, possible_obstacles.size() - 1)
-	else:
-		random_index = randi_range(0, possible_obstacles.size() - 2)
-	if (random_index == 3 && sniperAllowed):
-		sniperAllowed = false
-		get_node("SniperCooldown").start()
+	random_index = randi_range(0, possible_obstacles.size() - 1)
 	return possible_obstacles[random_index]
-
-
-func _on_sniper_cooldown_timeout():
-	sniperAllowed = true
-	pass # Replace with function body.
-
 
 func _on_generation_timer_timeout():
 	_generate_obstacle()

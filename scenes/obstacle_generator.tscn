@@ -25,13 +25,8 @@ curve = SubResource("Curve2D_kly3e")
 position = Vector2(0, 536)
 rotation = -1.5708
 
-[node name="SniperCooldown" type="Timer" parent="."]
-wait_time = 10.0
-one_shot = true
-
 [node name="GenerationTimer" type="Timer" parent="."]
 wait_time = 2.0
 autostart = true
 
-[connection signal="timeout" from="SniperCooldown" to="." method="_on_sniper_cooldown_timeout"]
 [connection signal="timeout" from="GenerationTimer" to="." method="_on_generation_timer_timeout"]

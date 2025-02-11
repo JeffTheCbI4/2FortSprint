@@ -7,6 +7,7 @@ const HIGH_SCORE = "HighScore"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	EventBus.connect("medic_used", _on_player_medic_used)
 	var file = FileAccess.open("user://highscore", FileAccess.READ)
 	if (file):
 		var highscore = file.get_var()
@@ -65,4 +66,12 @@ func _get_interface():
 
 func _on_music_finished():
 	$Music.play()
+	pass # Replace with function body.
+
+
+func _on_player_medic_used():
+	var medic_needle = preload("res://medic_needle.tscn").instantiate()
+	medic_needle.params($Player)
+	add_child(medic_needle)
+	medic_needle.global_position = Vector2(-200, 360)
 	pass # Replace with function body.

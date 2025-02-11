@@ -80,16 +80,17 @@ func _input(event):
 	pass
 	
 func _call_medic():
-	var stream = medic_calls.pick_random()
-	var player = get_node("AudioStreamPlayer2D")
-	player.stream = stream
-	player.play()
-	var modulate = get_node("HealthRequestSprite").get_modulate()
-	modulate.a = 1.0
-	get_node("HealthRequestSprite").set_modulate(modulate)
-	EventBus.emit_signal("medic_used")
-	if ($MedicCooldown.is_stopped()):
-		$MedicCooldown.start()
+	if (current_state != State.DEAD):
+		var stream = medic_calls.pick_random()
+		var player = get_node("AudioStreamPlayer2D")
+		player.stream = stream
+		player.play()
+		var modulate = get_node("HealthRequestSprite").get_modulate()
+		modulate.a = 1.0
+		get_node("HealthRequestSprite").set_modulate(modulate)
+		if ($MedicCooldown.is_stopped()):
+			EventBus.emit_signal("medic_used")
+			$MedicCooldown.start()
 
 func set_falling_velocity(new_velocity):
 	if (new_velocity > max_velocity):
@@ -101,14 +102,26 @@ func set_falling_velocity(new_velocity):
 
 func lose_life():
 	if (current_state != State.DEAD && health_state != HealthState.INVINCIBLE):
-		life -= 1
+		set_life(life - 1)
 		if (life <= 0):
 			die()
 		if (current_state != State.DEAD):
 			get_node("CollisionCooldown").start()
 			health_state = HealthState.INVINCIBLE
 			get_node("InvincibleFlickerTimer").start()
-		EventBus.emit_signal("player_lost_life", life)
+		EventBus.emit_signal("player_life_changed", life)
+
+func get_life():
+	set_life(life + 1)
+	EventBus.emit_signal("player_life_changed", life)
+	
+func set_life(new_life):
+	if (new_life > 3):
+		life = 3
+	elif (new_life < 0):
+		life = 0
+	else:
+		life = new_life
 
 func die():
 	current_state = State.DEAD
@@ -122,7 +135,10 @@ func _set_animation(animation_name):
 	pass
 
 func _on_area_2d_area_entered(area):
-	lose_life()
+	if (area.owner is MedicNeedle):
+		get_life()
+	else:
+		lose_life()
 	pass # Replace with function body.
 
 func _on_bullets_cooldown_timeout():
