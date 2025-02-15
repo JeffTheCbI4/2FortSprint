@@ -2,12 +2,14 @@ extends Node2D
 
 @export var progress_speed: float
 @export var possible_obstacles: Array
+@export var initial_progress_ratio: float
 
 @export var obsctacle_cooldown: float;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	get_node("GenerationTimer").wait_time = obsctacle_cooldown
+	$Path2D/PathFollow2D.set_progress_ratio(initial_progress_ratio)
 	pass # Replace with function body.
 
 

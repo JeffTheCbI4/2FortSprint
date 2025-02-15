@@ -21,6 +21,22 @@ var medic_calls = [
 	preload("res://audio/scout/medic02.mp3"),
 	preload("res://audio/scout/medic03.mp3")
 ]
+var hurt_sfx = [
+	preload("res://audio/scout/hurt/painsharp01.mp3"),
+	preload("res://audio/scout/hurt/painsharp02.mp3"),
+	preload("res://audio/scout/hurt/painsharp03.mp3"),
+	preload("res://audio/scout/hurt/painsharp04.mp3"),
+	preload("res://audio/scout/hurt/painsharp05.mp3"),
+	preload("res://audio/scout/hurt/painsharp06.mp3"),
+	preload("res://audio/scout/hurt/painsharp07.mp3"),
+	preload("res://audio/scout/hurt/painsharp08.mp3"),
+]
+var death_sfx = [
+	preload("res://audio/scout/death/paincrticialdeath01.mp3"),
+	preload("res://audio/scout/death/paincrticialdeath01.mp3"),
+	preload("res://audio/scout/death/paincrticialdeath01.mp3")
+]
+var healing_sound = preload("res://audio/health_pickup.wav")
 
 enum State { ON_FLOOR, FLYING, DEAD }
 enum HealthState { INVINCIBLE, VULNERABLE }
@@ -46,6 +62,7 @@ func _physics_process(delta):
 		if (collision && current_state != State.DEAD && collision.get_angle() == 0):
 			current_state = State.ON_FLOOR
 			get_node("BulletsCooldown").stop()
+			$Shooting.stop()
 	pass
 
 func generate_bullets():
@@ -67,8 +84,10 @@ func _process_player_input(delta):
 			current_state = State.FLYING
 		if get_node("BulletsCooldown").is_stopped():
 			get_node("BulletsCooldown").start()
+			$Shooting.play()
 	else:
 		get_node("BulletsCooldown").stop()
+		$Shooting.stop()
 
 	#if (collidedBody):
 		#falling_velocity = 0
@@ -82,9 +101,9 @@ func _input(event):
 func _call_medic():
 	if (current_state != State.DEAD):
 		var stream = medic_calls.pick_random()
-		var player = get_node("AudioStreamPlayer2D")
-		player.stream = stream
-		player.play()
+		var scout_voice_player = get_node("ScoutVoice")
+		scout_voice_player.stream = stream
+		scout_voice_player.play()
 		var modulate = get_node("HealthRequestSprite").get_modulate()
 		modulate.a = 1.0
 		get_node("HealthRequestSprite").set_modulate(modulate)
@@ -106,6 +125,8 @@ func lose_life():
 		if (life <= 0):
 			die()
 		if (current_state != State.DEAD):
+			$ScoutVoice.stream = hurt_sfx.pick_random()
+			$ScoutVoice.play()
 			get_node("CollisionCooldown").start()
 			health_state = HealthState.INVINCIBLE
 			get_node("InvincibleFlickerTimer").start()
@@ -113,6 +134,7 @@ func lose_life():
 
 func get_life():
 	set_life(life + 1)
+	$HealingSound.play()
 	EventBus.emit_signal("player_life_changed", life)
 	
 func set_life(new_life):
@@ -126,6 +148,9 @@ func set_life(new_life):
 func die():
 	current_state = State.DEAD
 	get_node("BulletsCooldown").stop()
+	$Shooting.stop()
+	$ScoutVoice.stream = death_sfx.pick_random()
+	$ScoutVoice.play()
 	_set_animation("dead")
 	emit_signal("player_died")
 	pass
@@ -135,10 +160,7 @@ func _set_animation(animation_name):
 	pass
 
 func _on_area_2d_area_entered(area):
-	if (area.owner is MedicNeedle):
-		get_life()
-	else:
-		lose_life()
+	lose_life()
 	pass # Replace with function body.
 
 func _on_bullets_cooldown_timeout():
@@ -156,4 +178,10 @@ func _on_collision_cooldown_timeout():
 
 func _on_invincible_flicker_timer_timeout():
 	visible = !visible
+	pass # Replace with function body.
+
+
+func _on_shooting_finished():
+	if (current_state == State.FLYING):
+		$Shooting.play()
 	pass # Replace with function body.

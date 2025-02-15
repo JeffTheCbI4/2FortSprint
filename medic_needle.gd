@@ -31,11 +31,11 @@ func _on_hitbox_area_entered(area):
 
 func after_colliding(area):
 	_isActive = false 
-	reparent(area.owner)
-	area.owner.add_child(self)
-	$Hitbox.collision_layer = 0
-	$Hitbox.collision_mask = 0
+	$Hitbox.set_collision_layer(0)
+	$Hitbox.set_collision_mask(0)
 	$DisappearTimer.start()
+	_target.get_life()
+	reparent(_target)
 
 func _on_disappear_timer_timeout():
 	queue_free()

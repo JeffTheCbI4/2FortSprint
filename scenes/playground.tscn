@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dp7hykj2x0s6y"]
+[gd_scene load_steps=14 format=3 uid="uid://dp7hykj2x0s6y"]
 
 [ext_resource type="Script" path="res://scenes/playground.gd" id="1_2nymt"]
 [ext_resource type="PackedScene" uid="uid://bemh7hd2chnlj" path="res://scenes/Player.tscn" id="1_qv6v6"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://byqkcy3lapy3u" path="res://scenes/sniper.tscn" id="5_a1r5c"]
 [ext_resource type="PackedScene" uid="uid://dmlq4ggfgqm8t" path="res://scenes/obstacles/moving_obstacle.tscn" id="6_w6rub"]
 [ext_resource type="PackedScene" uid="uid://ck6cotaesxa8x" path="res://audio_manager.tscn" id="8_ihwcr"]
+[ext_resource type="PackedScene" uid="uid://qco1lbf3wgln" path="res://healing_item.tscn" id="9_i2atq"]
 [ext_resource type="AudioStream" uid="uid://ds4tqy837ymjp" path="res://audio/playing-with-danger remix.mp3" id="11_lim5o"]
 
 [node name="Playground" type="Node"]
@@ -36,12 +37,21 @@ obsctacle_cooldown = 15.0
 position = Vector2(1381, 71)
 progress_speed = 700.0
 possible_obstacles = [ExtResource("5_5iktw"), ExtResource("6_w6rub"), ExtResource("2_k4d5x")]
+initial_progress_ratio = 0.5
 
 [node name="ObstacleGenerator2" parent="." instance=ExtResource("2_08xgw")]
 position = Vector2(1381, 70)
 progress_speed = 1200.0
 possible_obstacles = [ExtResource("5_5iktw"), ExtResource("6_w6rub"), ExtResource("2_k4d5x")]
+initial_progress_ratio = 1.0
 obsctacle_cooldown = 1.5
+
+[node name="HealthPackGenerator" parent="." instance=ExtResource("2_08xgw")]
+position = Vector2(1471, 73)
+progress_speed = 700.0
+possible_obstacles = [ExtResource("9_i2atq")]
+initial_progress_ratio = 0.2
+obsctacle_cooldown = 60.0
 
 [node name="Floor" parent="." instance=ExtResource("3_22sj6")]
 position = Vector2(166, 670)

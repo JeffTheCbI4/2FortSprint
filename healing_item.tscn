@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://qco1lbf3wgln"]
+
+[ext_resource type="Script" path="res://HealingItem.gd" id="1_brk3p"]
+[ext_resource type="Texture2D" uid="uid://hq8e3dnywggb" path="res://art/health_pack.png" id="2_ipp0b"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dso3u"]
+size = Vector2(50, 50)
+
+[node name="HealingItem" type="Node2D"]
+script = ExtResource("1_brk3p")
+speed = 500.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_ipp0b")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_dso3u")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

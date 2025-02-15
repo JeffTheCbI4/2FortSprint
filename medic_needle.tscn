@@ -16,7 +16,7 @@ speed = 1400.0
 texture = SubResource("PlaceholderTexture2D_w7uhy")
 
 [node name="Hitbox" type="Area2D" parent="."]
-collision_layer = 2
+collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 shape = SubResource("RectangleShape2D_mv8l0")
