@@ -1,11 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://bajtdwtyg17p0"]
+[gd_scene load_steps=3 format=3 uid="uid://bajtdwtyg17p0"]
 
 [ext_resource type="Script" path="res://HealthControl.gd" id="1_blbda"]
-[ext_resource type="Texture2D" uid="uid://b6oriv2g8anll" path="res://art/healt_atlas.png" id="2_62761"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4508c"]
-atlas = ExtResource("2_62761")
-region = Rect2(0, 0, 100, 100)
+[ext_resource type="Texture2D" uid="uid://dl1i7iutaf57k" path="res://art/health_indicator.png" id="2_4l7iq"]
 
 [node name="HealthControl" type="Control"]
 layout_mode = 3
@@ -17,4 +13,6 @@ grow_vertical = 2
 script = ExtResource("1_blbda")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = SubResource("AtlasTexture_4508c")
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_4l7iq")
+hframes = 4

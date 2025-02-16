@@ -1,12 +1,53 @@
-[gd_scene load_steps=22 format=3 uid="uid://bemh7hd2chnlj"]
+[gd_scene load_steps=33 format=3 uid="uid://bemh7hd2chnlj"]
 
 [ext_resource type="Script" path="res://scenes/Player.gd" id="1_x4ny1"]
 [ext_resource type="Texture2D" uid="uid://d0ewtd7b4y5p" path="res://art/scout_dead.png" id="2_fiigx"]
-[ext_resource type="Texture2D" path="res://art/scout.png" id="3_cd737"]
+[ext_resource type="Texture2D" uid="uid://bgi45viq6p4jn" path="res://art/ScoutDeadFlying.png" id="3_6mt4x"]
+[ext_resource type="Texture2D" uid="uid://dvicirvcemeu" path="res://art/scout.png" id="3_cd737"]
 [ext_resource type="Script" path="res://scenes/HealthRequestSprite.gd" id="4_2nafg"]
 [ext_resource type="Script" path="res://scenes/MedicCooldown.gd" id="5_0ho6e"]
 [ext_resource type="AudioStream" uid="uid://bu82v70hbikaq" path="res://audio/health_pickup.wav" id="5_f2d2a"]
 [ext_resource type="AudioStream" uid="uid://ct6hns22qyfe5" path="res://audio/minigun_shoot.wav" id="7_801au"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nyqp1"]
+atlas = ExtResource("3_6mt4x")
+region = Rect2(0, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3md8m"]
+atlas = ExtResource("3_6mt4x")
+region = Rect2(256, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_38q0j"]
+atlas = ExtResource("3_6mt4x")
+region = Rect2(512, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7b1sx"]
+atlas = ExtResource("3_6mt4x")
+region = Rect2(768, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_arm1e"]
+atlas = ExtResource("3_6mt4x")
+region = Rect2(1024, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l6vqh"]
+atlas = ExtResource("3_6mt4x")
+region = Rect2(1280, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uxwje"]
+atlas = ExtResource("3_6mt4x")
+region = Rect2(1536, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tolor"]
+atlas = ExtResource("3_6mt4x")
+region = Rect2(1792, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_04cio"]
+atlas = ExtResource("3_6mt4x")
+region = Rect2(2048, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ctnjp"]
+atlas = ExtResource("3_6mt4x")
+region = Rect2(2304, 0, 256, 256)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yabf2"]
 atlas = ExtResource("3_cd737")
@@ -60,6 +101,41 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_nyqp1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3md8m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_38q0j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7b1sx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_arm1e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l6vqh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uxwje")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tolor")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_04cio")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ctnjp")
+}],
+"loop": true,
+"name": &"dead_midair",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_yabf2")
 }, {
 "duration": 1.0,
@@ -95,7 +171,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q24j0"]
-size = Vector2(124, 196)
+size = Vector2(67.7891, 211.969)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mypb7"]
 size = Vector2(76.0259, 212.884)
@@ -120,7 +196,9 @@ sprite_frames = SubResource("SpriteFrames_y6gg0")
 animation = &"running"
 
 [node name="PhysicsShape" type="CollisionShape2D" parent="."]
-position = Vector2(10, 2)
+position = Vector2(8.15975, 1.63363)
+rotation = 0.482869
+scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_q24j0")
 
 [node name="Area2D" type="Area2D" parent="."]

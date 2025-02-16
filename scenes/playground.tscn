@@ -21,7 +21,7 @@ is_incrementing_score = true
 [node name="BackgroundGenerator" parent="." instance=ExtResource("2_0p2cx")]
 
 [node name="Player" parent="." instance=ExtResource("1_qv6v6")]
-position = Vector2(168, 495)
+position = Vector2(231, 495)
 gravity_force = 65.0
 max_velocity = 700.0
 min_velocity = -600.0
@@ -48,10 +48,10 @@ obsctacle_cooldown = 1.5
 
 [node name="HealthPackGenerator" parent="." instance=ExtResource("2_08xgw")]
 position = Vector2(1471, 73)
-progress_speed = 700.0
+progress_speed = 500.0
 possible_obstacles = [ExtResource("9_i2atq")]
 initial_progress_ratio = 0.2
-obsctacle_cooldown = 60.0
+obsctacle_cooldown = 35.0
 
 [node name="Floor" parent="." instance=ExtResource("3_22sj6")]
 position = Vector2(166, 670)

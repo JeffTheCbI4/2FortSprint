@@ -59,10 +59,13 @@ func _physics_process(delta):
 	if (current_state != State.ON_FLOOR):
 		set_falling_velocity(falling_velocity + gravity_force)
 		var collision = move_and_collide(Vector2(0, falling_velocity) * delta)
-		if (collision && current_state != State.DEAD && collision.get_angle() == 0):
-			current_state = State.ON_FLOOR
-			get_node("BulletsCooldown").stop()
-			$Shooting.stop()
+		if (collision && collision.get_angle() == 0):
+			if (current_state != State.DEAD):
+				current_state = State.ON_FLOOR
+				get_node("BulletsCooldown").stop()
+				$Shooting.stop()
+			elif (current_state == State.DEAD):
+				$AnimatedSprite2D.set_animation("dead")
 	pass
 
 func generate_bullets():
@@ -151,7 +154,7 @@ func die():
 	$Shooting.stop()
 	$ScoutVoice.stream = death_sfx.pick_random()
 	$ScoutVoice.play()
-	_set_animation("dead")
+	_set_animation("dead_midair")
 	emit_signal("player_died")
 	pass
 	

@@ -34,6 +34,7 @@ func after_colliding(area):
 	$Hitbox.set_collision_layer(0)
 	$Hitbox.set_collision_mask(0)
 	$DisappearTimer.start()
+	$HitSound.play()
 	_target.get_life()
 	reparent(_target)
 

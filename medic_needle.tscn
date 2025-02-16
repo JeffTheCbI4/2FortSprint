@@ -1,9 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://bah0nnveoayjk"]
+[gd_scene load_steps=5 format=3 uid="uid://bah0nnveoayjk"]
 
 [ext_resource type="Script" path="res://medic_needle.gd" id="1_qr20b"]
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_w7uhy"]
-size = Vector2(50, 20)
+[ext_resource type="Texture2D" uid="uid://dvmcu41t7pq8b" path="res://art/medic_needle.png" id="2_sn82j"]
+[ext_resource type="AudioStream" uid="uid://kk8liclid0hu" path="res://audio/arrow_impact_flesh.wav" id="3_q81qq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mv8l0"]
 size = Vector2(50, 20)
@@ -13,7 +12,8 @@ script = ExtResource("1_qr20b")
 speed = 1400.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = SubResource("PlaceholderTexture2D_w7uhy")
+scale = Vector2(0.199141, 0.199141)
+texture = ExtResource("2_sn82j")
 
 [node name="Hitbox" type="Area2D" parent="."]
 collision_layer = 0
@@ -23,6 +23,9 @@ shape = SubResource("RectangleShape2D_mv8l0")
 
 [node name="DisappearTimer" type="Timer" parent="."]
 wait_time = 40.0
+
+[node name="HitSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_q81qq")
 
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="timeout" from="DisappearTimer" to="." method="_on_disappear_timer_timeout"]
