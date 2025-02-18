@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://bemh7hd2chnlj"]
+[gd_scene load_steps=37 format=3 uid="uid://bemh7hd2chnlj"]
 
 [ext_resource type="Script" path="res://scenes/Player.gd" id="1_x4ny1"]
 [ext_resource type="Texture2D" uid="uid://d0ewtd7b4y5p" path="res://art/scout_dead.png" id="2_fiigx"]
@@ -7,7 +7,11 @@
 [ext_resource type="Script" path="res://scenes/HealthRequestSprite.gd" id="4_2nafg"]
 [ext_resource type="Script" path="res://scenes/MedicCooldown.gd" id="5_0ho6e"]
 [ext_resource type="AudioStream" uid="uid://bu82v70hbikaq" path="res://audio/health_pickup.wav" id="5_f2d2a"]
+[ext_resource type="Texture2D" uid="uid://cn54am66ng0dl" path="res://art/Speech_mediccall.png" id="5_hilrh"]
 [ext_resource type="AudioStream" uid="uid://ct6hns22qyfe5" path="res://audio/minigun_shoot.wav" id="7_801au"]
+[ext_resource type="AudioStream" uid="uid://dfe8cfvo41w2u" path="res://audio/scout/body_impact_hard1.wav" id="9_naaqr"]
+[ext_resource type="AudioStream" uid="uid://4acj3baohi78" path="res://audio/scout/body_impact_hard2.wav" id="10_dvopq"]
+[ext_resource type="AudioStream" uid="uid://ulqgi14qvnen" path="res://audio/scout/body_impact_hard3.wav" id="11_0bm7g"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nyqp1"]
 atlas = ExtResource("3_6mt4x")
@@ -176,8 +180,14 @@ size = Vector2(67.7891, 211.969)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mypb7"]
 size = Vector2(76.0259, 212.884)
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_2f6o4"]
-size = Vector2(70, 70)
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_4ra6g"]
+streams_count = 3
+stream_0/stream = ExtResource("9_naaqr")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("10_dvopq")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("11_0bm7g")
+stream_2/weight = 1.0
 
 [node name="Player" type="CharacterBody2D"]
 scale = Vector2(0.5, 0.5)
@@ -198,7 +208,6 @@ animation = &"running"
 [node name="PhysicsShape" type="CollisionShape2D" parent="."]
 position = Vector2(8.15975, 1.63363)
 rotation = 0.482869
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_q24j0")
 
 [node name="Area2D" type="Area2D" parent="."]
@@ -221,8 +230,10 @@ wait_time = 0.2
 
 [node name="HealthRequestSprite" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0)
-position = Vector2(138, -68)
-texture = SubResource("PlaceholderTexture2D_2f6o4")
+position = Vector2(44, -148)
+scale = Vector2(0.380862, 0.380862)
+texture = ExtResource("5_hilrh")
+flip_h = true
 script = ExtResource("4_2nafg")
 
 [node name="ScoutVoice" type="AudioStreamPlayer2D" parent="."]
@@ -238,6 +249,9 @@ script = ExtResource("5_0ho6e")
 [node name="Shooting" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_801au")
 volume_db = -20.0
+
+[node name="BodyFell" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_4ra6g")
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
 [connection signal="timeout" from="BulletsCooldown" to="." method="_on_bullets_cooldown_timeout"]

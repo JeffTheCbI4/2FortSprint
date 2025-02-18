@@ -4,6 +4,17 @@ extends Node2D
 @export var speed_slowing: float
 var target
 var state: SniperState = SniperState.AIMING
+var win_sounds = [
+	preload("res://audio/sniper/sniper_laughevil03.mp3"),
+	preload("res://audio/sniper/sniper_laughlong01.mp3"),
+	preload("res://audio/sniper/sniper_laughlong02.mp3"),
+	preload("res://audio/sniper/sniper_spit.mp3"),
+	preload("res://audio/sniper/sniper_standing_still.mp3"),
+]
+var lose_sounds = [
+	preload("res://audio/sniper/sniper_ahh_piss.mp3"),
+	preload("res://audio/sniper/sniper_autodejectedtie03.mp3")
+]
 
 enum SniperState { AIMING, READY_TO_FIRE }
 
@@ -50,9 +61,9 @@ func _on_shooting_timer_timeout():
 	EventBus.emit_signal("play_stream", preload("res://audio/sniper/sniper_shoot.wav"))
 	if (ray.is_colliding() && ray.get_collider() && ray.get_collider().owner is Player):
 		target.lose_life()
-		if (target.current_state == Player.State.DEAD):
-			EventBus.emit_signal("play_character_sound", AudioManager.Character.SNIPER, AudioManager.CharacterSoundType.WIN)
+		if (target.isDead()):
+			EventBus.emit_signal("play_stream", win_sounds.pick_random())
 	else:
-		EventBus.emit_signal("play_character_sound", AudioManager.Character.SNIPER, AudioManager.CharacterSoundType.FAIL)
+		EventBus.emit_signal("play_stream", lose_sounds.pick_random())
 	queue_free()
 	pass # Replace with function body.

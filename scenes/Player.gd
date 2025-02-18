@@ -12,6 +12,7 @@ class_name Player
 @export var min_velocity: float
 @export var current_state: State
 @export var health_state: HealthState
+@export var life_state: LifeState
 signal player_died
 signal medic_used
 
@@ -38,7 +39,8 @@ var death_sfx = [
 ]
 var healing_sound = preload("res://audio/health_pickup.wav")
 
-enum State { ON_FLOOR, FLYING, DEAD }
+enum State { ON_FLOOR, FLYING }
+enum LifeState { ALIVE, DEAD }
 enum HealthState { INVINCIBLE, VULNERABLE }
 
 # Called when the node enters the scene tree for the first time.
@@ -54,18 +56,19 @@ func _process(delta):
 	pass
 	
 func _physics_process(delta):
-	if (current_state != State.DEAD):
+	if (life_state != LifeState.DEAD):
 		_process_player_input(delta)
 	if (current_state != State.ON_FLOOR):
 		set_falling_velocity(falling_velocity + gravity_force)
 		var collision = move_and_collide(Vector2(0, falling_velocity) * delta)
 		if (collision && collision.get_angle() == 0):
-			if (current_state != State.DEAD):
-				current_state = State.ON_FLOOR
+			if (life_state != LifeState.DEAD):
 				get_node("BulletsCooldown").stop()
 				$Shooting.stop()
-			elif (current_state == State.DEAD):
+			elif (life_state == LifeState.DEAD && current_state != State.ON_FLOOR):
 				$AnimatedSprite2D.set_animation("dead")
+				$BodyFell.play()
+			current_state = State.ON_FLOOR
 	pass
 
 func generate_bullets():
@@ -102,7 +105,7 @@ func _input(event):
 	pass
 	
 func _call_medic():
-	if (current_state != State.DEAD):
+	if (life_state != LifeState.DEAD):
 		var stream = medic_calls.pick_random()
 		var scout_voice_player = get_node("ScoutVoice")
 		scout_voice_player.stream = stream
@@ -123,11 +126,11 @@ func set_falling_velocity(new_velocity):
 		falling_velocity = new_velocity
 
 func lose_life():
-	if (current_state != State.DEAD && health_state != HealthState.INVINCIBLE):
+	if (life_state != LifeState.DEAD && health_state != HealthState.INVINCIBLE):
 		set_life(life - 1)
 		if (life <= 0):
 			die()
-		if (current_state != State.DEAD):
+		if (life_state != LifeState.DEAD):
 			$ScoutVoice.stream = hurt_sfx.pick_random()
 			$ScoutVoice.play()
 			get_node("CollisionCooldown").start()
@@ -149,12 +152,15 @@ func set_life(new_life):
 		life = new_life
 
 func die():
-	current_state = State.DEAD
+	life_state = LifeState.DEAD
 	get_node("BulletsCooldown").stop()
 	$Shooting.stop()
 	$ScoutVoice.stream = death_sfx.pick_random()
 	$ScoutVoice.play()
-	_set_animation("dead_midair")
+	if (current_state == State.FLYING):
+		_set_animation("dead_midair")
+	if (current_state == State.ON_FLOOR):
+		_set_animation("dead")
 	emit_signal("player_died")
 	pass
 	
@@ -188,3 +194,6 @@ func _on_shooting_finished():
 	if (current_state == State.FLYING):
 		$Shooting.play()
 	pass # Replace with function body.
+
+func isDead():
+	return life_state == LifeState.DEAD

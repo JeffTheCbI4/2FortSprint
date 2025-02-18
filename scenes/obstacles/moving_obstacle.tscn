@@ -1,6 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://dmlq4ggfgqm8t"]
+[gd_scene load_steps=9 format=3 uid="uid://dmlq4ggfgqm8t"]
 
 [ext_resource type="Script" path="res://scenes/obstacles/moving_obstacle.gd" id="1_xyiqs"]
+[ext_resource type="Texture2D" uid="uid://0c7ngj64ys5x" path="res://art/SawBlade.png" id="2_kuq1d"]
+[ext_resource type="AudioStream" uid="uid://1vwwe00hcj5e" path="res://audio/saw/sawblade.wav" id="3_pe0if"]
 
 [sub_resource type="Curve2D" id="Curve2D_ue44o"]
 _data = {
@@ -8,8 +10,27 @@ _data = {
 }
 point_count = 3
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_su1gk"]
-size = Vector2(45, 45)
+[sub_resource type="AtlasTexture" id="AtlasTexture_73s44"]
+atlas = ExtResource("2_kuq1d")
+region = Rect2(0, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pxykl"]
+atlas = ExtResource("2_kuq1d")
+region = Rect2(256, 0, 256, 256)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5dlr3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_73s44")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pxykl")
+}],
+"loop": true,
+"name": &"default",
+"speed": 15.0
+}]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_e3g17"]
 radius = 30.0
@@ -27,12 +48,20 @@ rotation = 1.5708
 [node name="Area2D" type="Area2D" parent="PathFollow2D"]
 collision_layer = 2
 
-[node name="Sprite2D" type="Sprite2D" parent="PathFollow2D/Area2D"]
-texture = SubResource("PlaceholderTexture2D_su1gk")
+[node name="AnimationSprite2D" type="AnimatedSprite2D" parent="PathFollow2D/Area2D"]
+scale = Vector2(0.259426, 0.259426)
+sprite_frames = SubResource("SpriteFrames_5dlr3")
+frame_progress = 0.642685
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PathFollow2D/Area2D"]
 shape = SubResource("CircleShape2D_e3g17")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="PathFollow2D/Area2D"]
 
+[node name="SawSpinning" type="AudioStreamPlayer2D" parent="PathFollow2D/Area2D"]
+stream = ExtResource("3_pe0if")
+volume_db = -10.895
+
+[connection signal="area_entered" from="PathFollow2D/Area2D" to="." method="_on_area_2d_area_entered"]
 [connection signal="screen_exited" from="PathFollow2D/Area2D/VisibleOnScreenNotifier2D" to="." method="on_screen_exited"]
+[connection signal="finished" from="PathFollow2D/Area2D/SawSpinning" to="." method="_on_saw_spinning_finished"]

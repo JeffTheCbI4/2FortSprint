@@ -21,9 +21,8 @@ func _ready():
 func _process(delta):
 	pass
 
-func play_character_sound(character_name:Character, type:CharacterSoundType):
+func play_character_sound(stream):
 	if (characters_can_speak):
-		var stream = characters_sounds.get(Character.keys()[character_name]).get(CharacterSoundType.keys()[type])
 		characters_can_speak = false
 		get_node("CharacterAudioCooldown").start()
 		play_stream(stream)
