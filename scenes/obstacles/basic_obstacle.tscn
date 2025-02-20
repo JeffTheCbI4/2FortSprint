@@ -1,11 +1,9 @@
 [gd_scene load_steps=4 format=3 uid="uid://dr0yfhmnym1ld"]
 
 [ext_resource type="Script" path="res://scenes/obstacles/basic_obstacle.gd" id="1_6aeqf"]
+[ext_resource type="Texture2D" uid="uid://cjvvwwgvajqrt" path="res://art/sticky_bombs.png" id="2_q4is0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r4qd2"]
-size = Vector2(250, 50)
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_dyjwe"]
 size = Vector2(250, 50)
 
 [node name="BasicObstacle" type="Area2D"]
@@ -17,7 +15,7 @@ speed = 500.0
 shape = SubResource("RectangleShape2D_r4qd2")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = SubResource("PlaceholderTexture2D_dyjwe")
+texture = ExtResource("2_q4is0")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 rect = Rect2(-130, -30, 260, 60)

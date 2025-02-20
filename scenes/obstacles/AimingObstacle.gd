@@ -4,8 +4,10 @@ extends Area2D
 @export var acceleration: float
 @export var angular_speed: float
 @export var direction: Vector2
+@export var state: RocketState
 var target
 
+enum RocketState { FLYING, EXPLODING }
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -45,10 +47,21 @@ func _on_screen_exited():
 
 
 func _on_area_entered(area):
-	queue_free()
+	if (state != RocketState.EXPLODING):
+		$Sprite2D.set_visible(false)
+		$ExplosionParticles.emitting = true
+		state = RocketState.EXPLODING
 	pass # Replace with function body.
 
 
 func _on_body_entered(body):
+	if (state != RocketState.EXPLODING):
+		$Sprite2D.set_visible(false)
+		$ExplosionParticles.emitting = true
+		state = RocketState.EXPLODING
+	pass # Replace with function body.
+
+
+func _on_explosion_particles_finished():
 	queue_free()
 	pass # Replace with function body.

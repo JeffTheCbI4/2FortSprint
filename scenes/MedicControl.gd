@@ -10,7 +10,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if ($Timer.visible):
-		$Timer.text = str(Global.medic_call_left_time)
+		$Timer.text = str(Global.medic_call_left_time).pad_decimals(2)
 	pass
 
 func _turn_off():

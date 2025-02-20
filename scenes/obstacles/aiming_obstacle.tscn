@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://b8esc713idmvi"]
+[gd_scene load_steps=11 format=3 uid="uid://b8esc713idmvi"]
 
 [ext_resource type="Script" path="res://scenes/obstacles/AimingObstacle.gd" id="1_dt2py"]
 [ext_resource type="Texture2D" uid="uid://bhs5usfomqdix" path="res://art/rocket.png" id="2_736bg"]
 [ext_resource type="AudioStream" uid="uid://b6vlyqydxn3gf" path="res://audio/soldier/rocket_blackbox_shoot.wav" id="3_bwoyn"]
+[ext_resource type="PackedScene" uid="uid://bmaht3fijavg2" path="res://explosion_particle.tscn" id="4_xh4a1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xha14"]
 size = Vector2(120, 30)
@@ -66,6 +67,9 @@ rect = Rect2(-60, -15, 120, 30)
 [node name="FireSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_bwoyn")
 
+[node name="ExplosionParticles" parent="." instance=ExtResource("4_xh4a1")]
+
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_screen_exited"]
+[connection signal="finished" from="ExplosionParticles" to="." method="_on_explosion_particles_finished"]
