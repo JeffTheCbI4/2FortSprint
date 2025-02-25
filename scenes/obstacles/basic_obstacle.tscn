@@ -1,10 +1,24 @@
-[gd_scene load_steps=4 format=3 uid="uid://dr0yfhmnym1ld"]
+[gd_scene load_steps=10 format=3 uid="uid://dr0yfhmnym1ld"]
 
 [ext_resource type="Script" path="res://scenes/obstacles/basic_obstacle.gd" id="1_6aeqf"]
 [ext_resource type="Texture2D" uid="uid://cjvvwwgvajqrt" path="res://art/sticky_bombs.png" id="2_q4is0"]
+[ext_resource type="PackedScene" uid="uid://bmaht3fijavg2" path="res://explosion_particle.tscn" id="3_m18l2"]
+[ext_resource type="AudioStream" uid="uid://detu18aprjpxg" path="res://audio/explode1.wav" id="4_8b3pc"]
+[ext_resource type="AudioStream" uid="uid://borew0v8mqgtm" path="res://audio/explode2.wav" id="5_m0dxy"]
+[ext_resource type="AudioStream" uid="uid://c2iqppvti60qi" path="res://audio/explode3.wav" id="6_j41ed"]
+[ext_resource type="AudioStream" uid="uid://dpq76poqynct5" path="res://audio/demoman/stickybomblauncher_det.wav" id="7_p1c7i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r4qd2"]
 size = Vector2(250, 50)
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_qab4w"]
+streams_count = 3
+stream_0/stream = ExtResource("4_8b3pc")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("5_m0dxy")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("6_j41ed")
+stream_2/weight = 1.0
 
 [node name="BasicObstacle" type="Area2D"]
 collision_layer = 2
@@ -20,4 +34,19 @@ texture = ExtResource("2_q4is0")
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 rect = Rect2(-130, -30, 260, 60)
 
+[node name="ExplosionParticles" parent="." instance=ExtResource("3_m18l2")]
+position = Vector2(-49, 0)
+
+[node name="ExplosionParticles2" parent="." instance=ExtResource("3_m18l2")]
+position = Vector2(67, 0)
+
+[node name="ExplosionParticles3" parent="." instance=ExtResource("3_m18l2")]
+
+[node name="ExplosionSound" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_qab4w")
+
+[node name="DetonateSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_p1c7i")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_screen_exited"]

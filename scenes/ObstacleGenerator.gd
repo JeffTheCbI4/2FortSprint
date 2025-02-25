@@ -10,6 +10,7 @@ extends Node2D
 func _ready():
 	get_node("GenerationTimer").wait_time = obsctacle_cooldown
 	$Path2D/PathFollow2D.set_progress_ratio(initial_progress_ratio)
+	EventBus.connect("player_died", _on_player_died)
 	pass # Replace with function body.
 
 
@@ -39,3 +40,6 @@ func _get_random_obstacle():
 func _on_generation_timer_timeout():
 	_generate_obstacle()
 	pass # Replace with function body.
+	
+func _on_player_died():
+	$GenerationTimer.stop()

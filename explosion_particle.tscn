@@ -54,10 +54,10 @@ fill_from = Vector2(0.490826, 0.513761)
 fill_to = Vector2(0.866973, 0.880734)
 
 [node name="ExplosionParticles" type="GPUParticles2D"]
-scale = Vector2(20, 20)
 emitting = false
 amount = 50
 process_material = SubResource("ParticleProcessMaterial_xen8c")
 texture = SubResource("GradientTexture2D_3p05r")
 one_shot = true
 explosiveness = 1.0
+local_coords = true

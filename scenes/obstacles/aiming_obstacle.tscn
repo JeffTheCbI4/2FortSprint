@@ -1,9 +1,12 @@
-[gd_scene load_steps=11 format=3 uid="uid://b8esc713idmvi"]
+[gd_scene load_steps=15 format=3 uid="uid://b8esc713idmvi"]
 
 [ext_resource type="Script" path="res://scenes/obstacles/AimingObstacle.gd" id="1_dt2py"]
 [ext_resource type="Texture2D" uid="uid://bhs5usfomqdix" path="res://art/rocket.png" id="2_736bg"]
 [ext_resource type="AudioStream" uid="uid://b6vlyqydxn3gf" path="res://audio/soldier/rocket_blackbox_shoot.wav" id="3_bwoyn"]
 [ext_resource type="PackedScene" uid="uid://bmaht3fijavg2" path="res://explosion_particle.tscn" id="4_xh4a1"]
+[ext_resource type="AudioStream" uid="uid://detu18aprjpxg" path="res://audio/explode1.wav" id="5_ksri4"]
+[ext_resource type="AudioStream" uid="uid://borew0v8mqgtm" path="res://audio/explode2.wav" id="6_eexc5"]
+[ext_resource type="AudioStream" uid="uid://c2iqppvti60qi" path="res://audio/explode3.wav" id="7_qc4de"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xha14"]
 size = Vector2(120, 30)
@@ -44,6 +47,15 @@ animations = [{
 "speed": 30.0
 }]
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_5xn4d"]
+streams_count = 3
+stream_0/stream = ExtResource("5_ksri4")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("6_eexc5")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("7_qc4de")
+stream_2/weight = 1.0
+
 [node name="AimingObstacle" type="Area2D"]
 position = Vector2(30, 0)
 collision_layer = 2
@@ -68,6 +80,9 @@ rect = Rect2(-60, -15, 120, 30)
 stream = ExtResource("3_bwoyn")
 
 [node name="ExplosionParticles" parent="." instance=ExtResource("4_xh4a1")]
+
+[node name="ExplosionSound" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_5xn4d")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

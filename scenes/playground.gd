@@ -38,6 +38,7 @@ func _on_player_player_died():
 		var file = FileAccess.open("user://highscore", FileAccess.WRITE)
 		file.store_var(score)
 		file.close()
+	EventBus.emit_signal("player_died")
 	pass # Replace with function body.
 
 func _process_player_input():
