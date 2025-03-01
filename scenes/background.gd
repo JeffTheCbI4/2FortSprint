@@ -4,6 +4,9 @@ signal background_entered_screen(background)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	var bg_names = $Sprite2D.get_sprite_frames().get_animation_names()
+	var randomi = randi_range(0, bg_names.size() - 1) 
+	$Sprite2D.animation = bg_names[randomi]
 	pass # Replace with function body.
 
 

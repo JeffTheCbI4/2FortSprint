@@ -65,8 +65,9 @@ func _physics_process(delta):
 			if (life_state != LifeState.DEAD):
 				get_node("BulletsCooldown").stop()
 				$Shooting.stop()
+				_set_animation("running")
 			elif (life_state == LifeState.DEAD && current_state != State.ON_FLOOR):
-				$AnimatedSprite2D.set_animation("dead")
+				_set_animation("dead")
 				$BodyFell.play()
 			current_state = State.ON_FLOOR
 	pass
@@ -88,6 +89,7 @@ func _process_player_input(delta):
 		set_falling_velocity(falling_velocity - jump_force)
 		if (current_state == State.ON_FLOOR):
 			current_state = State.FLYING
+			_set_animation("mid_air")
 		if get_node("BulletsCooldown").is_stopped():
 			get_node("BulletsCooldown").start()
 			$Shooting.play()
@@ -166,6 +168,8 @@ func die():
 	
 func _set_animation(animation_name):
 	get_node("AnimatedSprite2D").animation = animation_name
+	if (animation_name == "dead"):
+		EventBus.emit_signal("player_body_fell")
 	pass
 
 func _on_area_2d_area_entered(area):

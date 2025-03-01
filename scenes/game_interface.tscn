@@ -1,9 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://b14pld32g3be"]
+[gd_scene load_steps=7 format=3 uid="uid://b14pld32g3be"]
 
 [ext_resource type="Script" path="res://scenes/game_interface.gd" id="1_ylf6b"]
 [ext_resource type="PackedScene" uid="uid://btlab8y00fff7" path="res://scenes/labeled_value.tscn" id="2_hf3ea"]
+[ext_resource type="FontFile" uid="uid://tlwq006kk48" path="res://fonts/TF2secondary.ttf" id="3_csyyv"]
 [ext_resource type="PackedScene" uid="uid://bajtdwtyg17p0" path="res://health_control.tscn" id="3_xisba"]
 [ext_resource type="PackedScene" uid="uid://crp6s8ms4kgqh" path="res://scenes/medic_control.tscn" id="4_bkaq2"]
+
+[sub_resource type="Theme" id="Theme_obnrr"]
+Label/fonts/font = ExtResource("3_csyyv")
 
 [node name="GameInterface" type="Control"]
 layout_mode = 3
@@ -16,15 +20,19 @@ script = ExtResource("1_ylf6b")
 
 [node name="Score" parent="." instance=ExtResource("2_hf3ea")]
 offset_left = 160.0
+offset_top = 32.0
 offset_right = 200.0
+offset_bottom = 72.0
+theme = SubResource("Theme_obnrr")
 _label_text = "Score"
 _value = "0"
 
 [node name="HighScore" parent="." instance=ExtResource("2_hf3ea")]
-offset_left = 273.0
-offset_top = 60.0
-offset_right = 313.0
-offset_bottom = 100.0
+offset_left = 269.0
+offset_top = 92.0
+offset_right = 309.0
+offset_bottom = 132.0
+theme = SubResource("Theme_obnrr")
 _label_text = "HighScore"
 _value = "0"
 

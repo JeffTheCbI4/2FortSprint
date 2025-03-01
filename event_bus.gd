@@ -8,6 +8,7 @@ signal play_sound(sound_name)
 signal play_stream(stream)
 signal medic_used()
 signal medic_available()
+signal player_body_fell()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

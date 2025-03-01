@@ -16,6 +16,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	var direction = Vector2(-1, 0)
+	global_position = global_position + direction * moving_speed * delta
 	_progress(delta)
 	pass
 	
@@ -23,11 +25,6 @@ func _progress(delta):
 	var pathFollow = get_node("PathFollow2D")
 	var newProgress = pathFollow.progress + progress_speed * delta
 	pathFollow.set_progress(newProgress)
-	
-func _physics_process(delta):
-	var direction = Vector2(-1, 0)
-	global_position = global_position + direction * moving_speed * delta
-
 
 func on_screen_exited():
 	queue_free()

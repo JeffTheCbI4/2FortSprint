@@ -5,6 +5,7 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	EventBus.connect("player_body_fell", player_body_fell)
 	pass # Replace with function body.
 
 
@@ -23,3 +24,7 @@ func _on_background_entered_screen(background):
 	new_background.global_position = background.global_position + Vector2(1280, 0)
 	
 	pass # Replace with function body.
+
+func player_body_fell():
+	is_running = false
+	pass

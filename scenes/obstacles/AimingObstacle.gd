@@ -40,14 +40,12 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
-	
-func _physics_process(delta):
 	if (state != RocketState.EXPLODING):
 		_calculate_angle()
 		global_position -= direction * velocity * delta
 		rotation = direction.normalized().angle()
 		_accelerate()
+	pass
 
 func _accelerate():
 	velocity += acceleration
