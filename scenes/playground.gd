@@ -4,6 +4,7 @@ extends Node
 
 const SCORE = "Score"
 const HIGH_SCORE = "HighScore"
+var last_bg_score_switch = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -20,6 +21,7 @@ func _ready():
 func _process(delta):
 	_process_player_input()
 	_increment_score(delta)
+	_process_bg()
 	pass
 
 func _increment_score(delta):
@@ -28,6 +30,12 @@ func _increment_score(delta):
 		var score = int(interface.get_value(SCORE))
 		var new_score = int(score + 100 * delta)
 		interface.set_value(SCORE, str(new_score))
+
+func _process_bg():
+	var score = int($GameInterface.get_value(SCORE))
+	if (score > 1000 && last_bg_score_switch < 1000):
+		$BackgroundGenerator.switch_next()
+		last_bg_score_switch = score
 
 func _on_player_player_died():
 	is_incrementing_score = false
