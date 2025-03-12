@@ -33,7 +33,10 @@ func _increment_score(delta):
 
 func _process_bg():
 	var score = int($GameInterface.get_value(SCORE))
-	if (score > 1000 && last_bg_score_switch < 1000):
+	if (score > 500 && last_bg_score_switch < 500):
+		$BackgroundGenerator.switch_next()
+		last_bg_score_switch = score
+	elif (score > 1000 && last_bg_score_switch < 1000):
 		$BackgroundGenerator.switch_next()
 		last_bg_score_switch = score
 
