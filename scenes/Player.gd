@@ -146,8 +146,8 @@ func get_life():
 	EventBus.emit_signal("player_life_changed", life)
 	
 func set_life(new_life):
-	if (new_life > 3):
-		life = 3
+	if (new_life > max_life):
+		life = max_life
 	elif (new_life < 0):
 		life = 0
 	else:

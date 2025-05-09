@@ -39,6 +39,9 @@ func _process_bg():
 	elif (score > 1000 && last_bg_score_switch < 1000):
 		$BackgroundGenerator.switch_next()
 		last_bg_score_switch = score
+	elif (score > 1500 && last_bg_score_switch < 1500):
+		$BackgroundGenerator.switch_next()
+		last_bg_score_switch = score
 
 func _on_player_player_died():
 	is_incrementing_score = false

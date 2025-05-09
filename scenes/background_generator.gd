@@ -13,13 +13,18 @@ var bg_array = [
 		preload("res://art/background_bridge.png")
 	],
 	[
+		preload("res://art/background_blue.png"),
+		preload("res://art/background_blue2.png")
+	],
+	[
 		preload("res://art/background_blue.png")
 	]
 ]
 
 var bg_switches = [
 	preload("res://art/red_bridge_bg_switch.png"),
-	preload("res://art/blue_bridge_bg_switch.png")
+	preload("res://art/blue_bridge_bg_switch.png"),
+	preload("res://art/blue_intel_switch.png")
 ]
 
 
